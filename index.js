@@ -1,11 +1,6 @@
-const express = require("express");
-const app = express();
-const port = 3000;
+const Server = require("./src/infrastructure/webserver/Server");
+const { PORT } = require("./src/infrastructure/config/environment");
 
-app.get("/", (req, res) => {
-  res.send("Hello World!");
-});
+const server = new Server(PORT, []);
 
-app.listen(port, () => {
-  console.log(`App listening at http://localhost:${port}`);
-});
+server.start();
