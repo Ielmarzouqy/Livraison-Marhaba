@@ -1,12 +1,16 @@
 const express = require("express");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
+const { PORT } = require("../config/environment");
+const router = require("./routes");
+const ErrorHandler = require("../errors/ErrorHandler");
 
 class Server {
-  constructor(PORT, routes) {
+  constructor() {
     this.app = express();
     this.PORT = PORT;
-    this.routes = routes;
+    this.router = router;
+    this.ErrorHandler = ErrorHandler;
   }
 
   configure = () => {
@@ -24,9 +28,10 @@ class Server {
       res.send("Hello World!");
     });
 
-    this.routes.forEach((route) => {
-      this.app.use(`/api${route.path}`, route.router);
-    });
+    this.app.use("/api", this.router);
+
+    this.app.use(this.ErrorHandler.notFound);
+    this.app.use(this.ErrorHandler.handle);
   };
 
   start = () => {
