@@ -11,13 +11,13 @@ mongoose.connect(environment.mongo.MONGO_URI, {
 
 mongoose.connection
   .once("open", () => {
-    logger.info("connection to database established successfully.");
+    console.log("connection to database established successfully.");
   })
   .on("error", (error) => {
-    logger.error(`error while connecting to database: ${error}`);
+    console.log(`error while connecting to database: ${error}`);
   })
   .on("disconnected", () => {
-    logger.info("database connection closed.");
+    console.log("database connection closed.");
   });
 
 module.exports = mongoose;

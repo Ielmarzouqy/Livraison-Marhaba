@@ -15,7 +15,7 @@ const validateData = (data, schemaName) => {
       return {
         error: {
           status: 404,
-          message: [`Schema "${schemaName}" does not exist`],
+          message: `Schema "${schemaName}" does not exist`,
         },
       };
     }
@@ -28,7 +28,7 @@ const validateData = (data, schemaName) => {
       return {
         error: {
           status: 400,
-          message: errorMessages,
+          message: errorMessages[0],
         },
       };
     }
@@ -40,9 +40,7 @@ const validateData = (data, schemaName) => {
     return {
       error: {
         status: 500,
-        message: [
-          `Error validating data against schema "${schemaName}": ${error.message}`,
-        ],
+        message: `Error validating data against schema "${schemaName}": ${error.message}`,
       },
     };
   }

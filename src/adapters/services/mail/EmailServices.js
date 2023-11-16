@@ -20,9 +20,12 @@ class EmailServices extends EmailServicesInterface {
 
     const emailSent = await this.emailGateway.sendEmail(email, subject, body);
 
-    if (!emailSent) return false;
+    if (!emailSent) {
+      const error = new Error("Email could not be sent");
+      error.status = 500;
 
-    return true;
+      throw error;
+    }
   };
 
   createResetPasswordEmailTemplate = (token) => {

@@ -4,7 +4,7 @@ const RepositoryInterface = require("../../application/interfaces/repositories/R
  * @abstract
  */
 class BaseRepository extends RepositoryInterface {
-  constructor({ model }) {
+  constructor(model) {
     super();
     this.model = model;
   }

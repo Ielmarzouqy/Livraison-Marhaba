@@ -1,11 +1,48 @@
+const bcrypt = require("bcryptjs");
 const AuthServicesInterface = require("../../../application/interfaces/services/auth/AuthServicesInterface");
 const JsonWebToken = require("../../../infrastructure/packages/jwt/JsonWebToken");
+const UserRepository = require("../../../infrastructure/repositories/UserRepository");
+const UserTokenRepository = require("../../../infrastructure/repositories/UserTokenRepository");
+const validateData = require("../../../infrastructure/helpers/validateData");
 
 class AuthServices extends AuthServicesInterface {
   constructor() {
     super();
     this.jsonWebToken = new JsonWebToken();
+    this.userRepository = new UserRepository();
+    this.userTokenRepository = new UserTokenRepository();
+    this.validateData = validateData;
   }
+
+  validateRegisterData = async (registerData) => {
+    const { error: validationError } = this.validateData(
+      registerData,
+      "register"
+    );
+
+    if (validationError) {
+      const error = new Error(validationError.message);
+      error.status = validationError.status;
+
+      throw error;
+    }
+  };
+
+  validateLoginData = async (loginData) => {
+    const { error: validationError } = this.validateData(loginData, "login");
+
+    if (validationError) {
+      const error = new Error(validationError.message);
+      error.status = validationError.status;
+
+      throw error;
+    }
+  };
+
+  isEmailExist = async (email) => {
+    const user = await this.userRepository.findByEmail(email);
+    return !!user;
+  };
 
   hashPassword = async (password) => {
     const salt = await bcrypt.genSalt(10);
@@ -14,6 +51,30 @@ class AuthServices extends AuthServicesInterface {
 
   comparePassword = async (password, hashedPassword) => {
     return await bcrypt.compare(password, hashedPassword);
+  };
+
+  register = async (data) => {
+    const user = await this.userRepository.create(data);
+
+    if (!user) {
+      const error = new Error("User could not be created");
+      error.status = 500;
+
+      throw error;
+    }
+
+    return {
+      id: user._id,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      image: user.image,
+      phoneNumber: user.phoneNumber,
+      address: user.address,
+      roles: user.roles.map((role) => role.name),
+      isVerified: user.isVerified,
+      isBanned: user.isBanned,
+    };
   };
 
   generateAccessToken = async (payload) => {
@@ -83,6 +144,22 @@ class AuthServices extends AuthServicesInterface {
             : "Invalid token"
         } `,
       };
+    }
+  };
+
+  saveRefreshToken = async (refreshToken, userId) => {
+    const userToken = await this.userTokenRepository.find({ userId });
+
+    if (userToken.length > 0) {
+      await this.userTokenRepository.update(userToken[0]._id, {
+        refreshToken,
+        updatedAt: new Date(),
+      });
+    } else {
+      await this.userTokenRepository.create({
+        userId,
+        refreshToken,
+      });
     }
   };
 

@@ -9,9 +9,27 @@ class AuthController extends AuthControllerInterface {
     this.registerUseCase = new RegisterUseCase();
   }
 
-  async register(req, res) {
+  register = async (req, res) => {
+    const {
+      firstName,
+      lastName,
+      email,
+      password,
+      image,
+      phoneNumber,
+      address,
+      roleNames,
+    } = req.body;
+
     const { status, jwt, ...rest } = await this.registerUseCase.execute({
-      ...req.body,
+      firstName,
+      lastName,
+      email,
+      password,
+      image,
+      phoneNumber,
+      address,
+      roleNames,
     });
 
     if (jwt) {
@@ -20,9 +38,9 @@ class AuthController extends AuthControllerInterface {
     }
 
     res.status(status).json({ ...rest });
-  }
+  };
 
-  async login(req, res) {
+  login = async (req, res) => {
     const { status, jwt, ...rest } = await this.loginUseCase.execute({
       ...req.body,
     });
@@ -33,11 +51,11 @@ class AuthController extends AuthControllerInterface {
     }
 
     res.status(status).json({ ...rest });
-  }
+  };
 
-  async logout(req, res) {}
+  logout = async (req, res) => {};
 
-  async refreshToken(req, res) {}
+  refreshToken = async (req, res) => {};
 }
 
 module.exports = AuthController;
