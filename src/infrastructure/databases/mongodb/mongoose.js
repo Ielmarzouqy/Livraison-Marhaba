@@ -5,8 +5,6 @@ mongoose.set("strictQuery", true);
 
 mongoose.connect(environment.mongo.MONGO_URI, {
   dbName: environment.mongo.MONGO_DB_NAME,
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
 });
 
 mongoose.connection
