@@ -43,4 +43,4 @@ class JsonWebToken {
   };
 }
 
-module.exports = new JsonWebToken();
+module.exports = JsonWebToken;

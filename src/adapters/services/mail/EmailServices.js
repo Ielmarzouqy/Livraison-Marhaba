@@ -1,9 +1,10 @@
 const EmailServicesInterface = require("../../../application/interfaces/services/mail/MailServicesInterface");
+const EmailGateway = require("../../../infrastructure/gateways/mail/EmailGateway");
 
 class EmailServices extends EmailServicesInterface {
-  constructor({ emailGateway }) {
+  constructor() {
     super();
-    this.emailGateway = emailGateway;
+    this.emailGateway = new EmailGateway();
   }
 
   createVerificationEmailTemplate = (token) => {

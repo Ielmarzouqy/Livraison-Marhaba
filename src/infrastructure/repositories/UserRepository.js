@@ -1,7 +1,9 @@
 const BaseRepository = require("./BaseRepository");
+const User = require("../databases/mongodb/models/User");
+const Role = require("../databases/mongodb/models/Role");
 
 class UserRepository extends BaseRepository {
-  constructor({ User, Role }) {
+  constructor() {
     super(User);
     this.roleModel = Role;
   }

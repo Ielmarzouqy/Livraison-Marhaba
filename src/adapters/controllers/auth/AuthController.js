@@ -1,10 +1,12 @@
 const AuthControllerInterface = require("../../../application/interfaces/controllers/auth/AuthControllerInterface");
+const LoginUseCase = require("../../../application/usecases/auth/LoginUseCase");
+const RegisterUseCase = require("../../../application/usecases/auth/RegisterUseCase");
 
 class AuthController extends AuthControllerInterface {
-  constructor({ loginUseCase, registerUseCase }) {
+  constructor() {
     super();
-    this.loginUseCase = loginUseCase;
-    this.registerUseCase = registerUseCase;
+    this.loginUseCase = new LoginUseCase();
+    this.registerUseCase = new RegisterUseCase();
   }
 
   async register(req, res) {

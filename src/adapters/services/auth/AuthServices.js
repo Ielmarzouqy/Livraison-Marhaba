@@ -1,9 +1,10 @@
 const AuthServicesInterface = require("../../../application/interfaces/services/auth/AuthServicesInterface");
+const JsonWebToken = require("../../../infrastructure/packages/jwt/JsonWebToken");
 
 class AuthServices extends AuthServicesInterface {
-  constructor({ jsonWebToken }) {
+  constructor() {
     super();
-    this.jsonWebToken = jsonWebToken;
+    this.jsonWebToken = new JsonWebToken();
   }
 
   hashPassword = async (password) => {
