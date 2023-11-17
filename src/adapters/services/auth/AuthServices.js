@@ -77,6 +77,40 @@ class AuthServices extends AuthServicesInterface {
     };
   };
 
+  login = async (data) => {
+    const user = await this.userRepository.findByEmail(data.email);
+    if (!user) {
+      const error = new Error("Email does not exist");
+      error.status = 404;
+
+      throw error;
+    }
+
+    const isPasswordValid = await this.comparePassword(
+      data.password,
+      user.password
+    );
+    if (!isPasswordValid) {
+      const error = new Error("Password is incorrect");
+      error.status = 401;
+
+      throw error;
+    }
+
+    return {
+      id: user._id,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      image: user.image,
+      phoneNumber: user.phoneNumber,
+      address: user.address,
+      roles: user.roles.map((role) => role.name),
+      isVerified: user.isVerified,
+      isBanned: user.isBanned,
+    };
+  };
+
   generateAccessToken = async (payload) => {
     const { access_token_secret } = this.jsonWebToken;
     return await this.jsonWebToken.generate(

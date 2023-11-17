@@ -1,17 +1,44 @@
 const LoginUseCaseInterface = require("../../interfaces/usecases/auth/LoginUseCaseInterface");
 const AuthServices = require("../../../adapters/services/auth/AuthServices");
-const UserRepository = require("../../../infrastructure/repositories/UserRepository");
-const UserTokenRepository = require("../../../infrastructure/repositories/UserTokenRepository");
 
 class LoginUseCase extends LoginUseCaseInterface {
   constructor() {
     super();
-    this.authService = new AuthServices();
-    this.userRepository = new UserRepository();
-    this.userTokenRepository = new UserTokenRepository();
+    this.authServices = new AuthServices();
   }
 
-  execute = (data) => {};
+  execute = async (data) => {
+    try {
+      await this.authServices.validateLoginData(data);
+
+      const user = await this.authServices.login(data);
+
+      const accessToken = await this.authServices.generateAccessToken({
+        ...user,
+      });
+      const refreshToken = await this.authServices.generateRefreshToken({
+        id: user.id,
+      });
+
+      await this.authServices.saveRefreshToken(refreshToken, user.id);
+
+      return {
+        status: 200,
+        message: "User logged in successfully",
+        user,
+        jwt: {
+          accessToken,
+          refreshToken,
+        },
+      };
+    } catch (error) {
+      console.log(error);
+      return {
+        status: error.status || 500,
+        message: error.message || "Something went wrong, please try again",
+      };
+    }
+  };
 }
 
 module.exports = LoginUseCase;

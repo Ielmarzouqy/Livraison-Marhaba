@@ -41,8 +41,10 @@ class AuthController extends AuthControllerInterface {
   };
 
   login = async (req, res) => {
+    const { email, password } = req.body;
     const { status, jwt, ...rest } = await this.loginUseCase.execute({
-      ...req.body,
+      email,
+      password,
     });
 
     if (jwt) {
