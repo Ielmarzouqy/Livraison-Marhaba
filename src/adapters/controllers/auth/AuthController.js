@@ -2,13 +2,14 @@ const AuthControllerInterface = require("../../../application/interfaces/control
 const LoginUseCase = require("../../../application/usecases/auth/LoginUseCase");
 const RegisterUseCase = require("../../../application/usecases/auth/RegisterUseCase");
 const LogoutUseCase = require("../../../application/usecases/auth/LogoutUseCase");
-
+const RefreshTokenUseCase = require("../../../application/usecases/auth/RefreshTokenUseCase");
 class AuthController extends AuthControllerInterface {
   constructor() {
     super();
     this.loginUseCase = new LoginUseCase();
     this.registerUseCase = new RegisterUseCase();
     this.logoutUseCase = new LogoutUseCase();
+    this.refreshTokenUseCase = new RefreshTokenUseCase();
   }
 
   register = async (req, res) => {
@@ -70,7 +71,19 @@ class AuthController extends AuthControllerInterface {
     res.status(status).json({ ...rest });
   };
 
-  refreshToken = async (req, res) => {};
+  refreshToken = async (req, res) => {
+    const { refresh_token } = req.cookies;
+
+    const { status, jwt, ...rest } = await this.refreshTokenUseCase.execute(
+      refresh_token
+    );
+
+    if (jwt) {
+      res.cookie("access_token", jwt.accessToken, { httpOnly: true });
+    }
+
+    res.status(status).json({ ...rest });
+  };
 }
 
 module.exports = AuthController;

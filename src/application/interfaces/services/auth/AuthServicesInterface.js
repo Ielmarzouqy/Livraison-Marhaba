@@ -113,11 +113,28 @@ class AuthServicesInterface {
   };
 
   /**
+   * Check if the given refresh token exist in the database
+   * @param {string} token - The refresh token to check
+   * @returns {Promise<void>} - A promise that resolves with nothing
+   */
+  checkRefreshTokenInDB = async (token) => {
+    throw new Error("ERR_METHOD_NOT_IMPLEMENTED");
+  };
+  /**
    * Generates an email verification token
    * @param {object} payload - The payload to sign
    * @returns {Promise<string>} - A promise that resolves with the email verification token
    */
   generateEmailVerificationToken = async (payload) => {
+    throw new Error("ERR_METHOD_NOT_IMPLEMENTED");
+  };
+
+  /**
+   * Get the user credentials
+   * @param {number} id - The user id to get the credentials
+   * @returns {Promise<object>} - A promise that resolves with the user credentials
+   */
+  getUserCredentials = async (id) => {
     throw new Error("ERR_METHOD_NOT_IMPLEMENTED");
   };
 }

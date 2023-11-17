@@ -125,7 +125,7 @@ class AuthServices extends AuthServicesInterface {
     return await this.jsonWebToken.generate(
       payload,
       refresh_token_secret,
-      "7d"
+      "30d"
     );
   };
 
@@ -164,10 +164,7 @@ class AuthServices extends AuthServicesInterface {
         refresh_token_secret
       );
 
-      return {
-        status: 200,
-        payload,
-      };
+      return payload;
     } catch (err) {
       const error = new Error(
         `Access Denied: ${
@@ -209,6 +206,17 @@ class AuthServices extends AuthServicesInterface {
     }
 
     await this.userTokenRepository.softDelete(userToken[0]._id);
+  };
+
+  checkRefreshTokenInDB = async (refreshToken) => {
+    const userToken = await this.userTokenRepository.find({ refreshToken });
+
+    if (userToken.length === 0) {
+      const error = new Error("Refresh token does not exist in database");
+      error.status = 400;
+
+      throw error;
+    }
   };
 
   generateEmailVerificationToken = async (payload) => {
@@ -282,6 +290,30 @@ class AuthServices extends AuthServicesInterface {
         message: "Invalid token",
       };
     }
+  };
+
+  getUserCredentials = async (id) => {
+    const user = await this.userRepository.findById(id);
+
+    if (!user) {
+      const error = new Error("User does not exist");
+      error.status = 404;
+
+      throw error;
+    }
+
+    return {
+      id: user._id,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      image: user.image,
+      phoneNumber: user.phoneNumber,
+      address: user.address,
+      roles: user.roles.map((role) => role.name),
+      isVerified: user.isVerified,
+      isBanned: user.isBanned,
+    };
   };
 }
 

@@ -9,4 +9,6 @@ authRoutes.post("/register", authController.register);
 
 authRoutes.post("/logout", authController.logout);
 
+authRoutes.post("/refresh-token", authController.refreshToken);
+
 module.exports = authRoutes;
