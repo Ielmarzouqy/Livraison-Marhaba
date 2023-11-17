@@ -2,6 +2,26 @@
 
 This is the backend API for Livraison Marhaba, a restaurant delivery application. It powers the core functionality of order processing, user management, and delivery tracking.
 
+## Table of Contents
+
+- [Livraison-Marhaba](#livraison-marhaba)
+  - [Table of Contents](#table-of-contents)
+  - [Getting Started](#getting-started)
+    - [1. Installation](#1-installation)
+      - [1.1. Clone the repository](#11-clone-the-repository)
+      - [1.2. Navigate to the project directory](#12-navigate-to-the-project-directory)
+      - [1.3. Install dependencies](#13-install-dependencies)
+    - [2. Configuration](#2-configuration)
+      - [2.1. Create copy of .env.example file and rename it to .env](#21-create-copy-of-envexample-file-and-rename-it-to-env)
+      - [2.2. Update environment variables](#22-update-environment-variables)
+    - [3. Seed the roles and admin user](#3-seed-the-roles-and-admin-user)
+      - [3.1. Run the seed command](#31-run-the-seed-command)
+    - [4. Run the application](#4-run-the-application)
+  - [File Structure](#file-structure)
+    - [1. Main Directories](#1-main-directories)
+    - [2. Clean Architecture Layers](#2-clean-architecture-layers)
+  - [API Documentation](#api-documentation)
+
 ## Getting Started
 
 These instructions will help you set up and run the Livraison Marhaba API on your local machine for development and testing purposes.
