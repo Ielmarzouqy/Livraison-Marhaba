@@ -7,9 +7,9 @@ class RegisterUseCaseInterface {
    * @param {Object} data - The data to register
    * @return {Promise<Object>} - A promise that resolves with the register result
    */
-  async execute(data) {
+  execute = async (data) => {
     throw new Error("ERR_METHOD_NOT_IMPLEMENTED");
-  }
+  };
 }
 
 module.exports = RegisterUseCaseInterface;

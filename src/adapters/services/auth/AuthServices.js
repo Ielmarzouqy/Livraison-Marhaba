@@ -142,18 +142,17 @@ class AuthServices extends AuthServicesInterface {
         status: 200,
         payload,
       };
-    } catch (error) {
-      if (error.message.includes("jwt expired")) {
-        return {
-          status: 403,
-          message: "Access Denied: Token expired",
-        };
-      }
+    } catch (err) {
+      const error = new Error(
+        `Access Denied: ${
+          err.message.includes("jwt expired")
+            ? "Token expired"
+            : "Invalid token"
+        } `
+      );
+      error.status = 401;
 
-      return {
-        status: 401,
-        message: "Access Denied: Invalid token",
-      };
+      throw error;
     }
   };
 
@@ -169,15 +168,17 @@ class AuthServices extends AuthServicesInterface {
         status: 200,
         payload,
       };
-    } catch (error) {
-      return {
-        status: 401,
-        message: `Access Denied: ${
-          error.message.includes("jwt expired")
+    } catch (err) {
+      const error = new Error(
+        `Access Denied: ${
+          err.message.includes("jwt expired")
             ? "Token expired"
             : "Invalid token"
-        } `,
-      };
+        } `
+      );
+      error.status = 401;
+
+      throw error;
     }
   };
 
@@ -195,6 +196,19 @@ class AuthServices extends AuthServicesInterface {
         refreshToken,
       });
     }
+  };
+
+  deleteRefreshToken = async (refreshToken) => {
+    const userToken = await this.userTokenRepository.find({ refreshToken });
+
+    if (userToken.length === 0) {
+      const error = new Error("Refresh token does not exist in database");
+      error.status = 400;
+
+      throw error;
+    }
+
+    await this.userTokenRepository.softDelete(userToken[0]._id);
   };
 
   generateEmailVerificationToken = async (payload) => {

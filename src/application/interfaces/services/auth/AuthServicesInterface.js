@@ -104,6 +104,15 @@ class AuthServicesInterface {
   };
 
   /**
+   * Delete the given refresh token
+   * @param {string} token - The refresh token to delete
+   * @returns {Promise<void>} - A promise that resolves with nothing
+   */
+  deleteRefreshToken = async (token) => {
+    throw new Error("ERR_METHOD_NOT_IMPLEMENTED");
+  };
+
+  /**
    * Generates an email verification token
    * @param {object} payload - The payload to sign
    * @returns {Promise<string>} - A promise that resolves with the email verification token

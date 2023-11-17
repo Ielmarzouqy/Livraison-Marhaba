@@ -7,9 +7,9 @@ class LoginUseCaseInterface {
    * @param {Object} data - The email and password to login
    * @return {Promise<Object>} - A promise that resolves with the login result
    */
-  async execute(data) {
+  execute = async (data) => {
     throw new Error("ERR_METHOD_NOT_IMPLEMENTED");
-  }
+  };
 }
 
 module.exports = LoginUseCaseInterface;
