@@ -130,6 +130,42 @@ class AuthServicesInterface {
   };
 
   /**
+   * Verifies the given email verification token
+   * @param {string} token - The email verification token to verify
+   * @returns {Promise<object>} - A promise that resolves with the decoded email verification token
+   */
+  verifyEmailVerificationToken = async (token) => {
+    throw new Error("ERR_METHOD_NOT_IMPLEMENTED");
+  };
+
+  /**
+   * Verify the given email
+   * @param {number} id - The user id to verify the email
+   * @returns {Promise<void>} - A promise that resolves with nothing
+   */
+  verifyEmail = async (id) => {
+    throw new Error("ERR_METHOD_NOT_IMPLEMENTED");
+  };
+
+  /**
+   * generate a reset password token
+   * @param {object} payload - The payload to sign
+   * @returns {Promise<string>} - A promise that resolves with the reset password token
+   */
+  generateResetPasswordToken = async (payload) => {
+    throw new Error("ERR_METHOD_NOT_IMPLEMENTED");
+  };
+
+  /**
+   * Verifies the given reset password token
+   * @param {string} token - The reset password token to verify
+   * @returns {Promise<object>} - A promise that resolves with the decoded reset password token
+   */
+  verifyResetPasswordToken = async (token) => {
+    throw new Error("ERR_METHOD_NOT_IMPLEMENTED");
+  };
+
+  /**
    * Get the user credentials
    * @param {number} id - The user id to get the credentials
    * @returns {Promise<object>} - A promise that resolves with the user credentials

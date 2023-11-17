@@ -228,7 +228,7 @@ class AuthServices extends AuthServicesInterface {
     );
   };
 
-  verifyEmailToken = async (token) => {
+  verifyEmailVerificationToken = async (token) => {
     const { email_verification_token_secret } = this.jsonWebToken;
     try {
       const payload = await this.jsonWebToken.verify(
@@ -236,23 +236,34 @@ class AuthServices extends AuthServicesInterface {
         email_verification_token_secret
       );
 
-      return {
-        status: 200,
-        payload,
-      };
-    } catch (error) {
-      if (error.message.includes("jwt expired")) {
-        return {
-          status: 401,
-          message: "Token expired",
-        };
-      }
+      return payload;
+    } catch (err) {
+      const error = new Error(
+        `Access Denied: ${
+          err.message.includes("jwt expired")
+            ? "Token expired"
+            : "Invalid token"
+        } `
+      );
+      error.status = 401;
 
-      return {
-        status: 400,
-        message: "Invalid token",
-      };
+      throw error;
     }
+  };
+
+  verifyEmail = async (id) => {
+    const user = await this.userRepository.findById(id);
+
+    if (!user) {
+      const error = new Error("User does not exist");
+      error.status = 404;
+
+      throw error;
+    }
+
+    await this.userRepository.update(id, {
+      isVerified: true,
+    });
   };
 
   generateResetPasswordToken = async (payload) => {
@@ -277,18 +288,17 @@ class AuthServices extends AuthServicesInterface {
         status: 200,
         payload,
       };
-    } catch (error) {
-      if (error.message.includes("jwt expired")) {
-        return {
-          status: 401,
-          message: "Token expired",
-        };
-      }
+    } catch (err) {
+      const error = new Error(
+        `Access Denied: ${
+          err.message.includes("jwt expired")
+            ? "Token expired"
+            : "Invalid token"
+        } `
+      );
+      error.status = 401;
 
-      return {
-        status: 400,
-        message: "Invalid token",
-      };
+      throw error;
     }
   };
 

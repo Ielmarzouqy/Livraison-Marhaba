@@ -41,6 +41,16 @@ class AuthControllerInterface {
   refreshToken = async (req, res) => {
     throw new Error("ERR_METHOD_NOT_IMPLEMENTED");
   };
+
+  /**
+   * Verifies a user's email.
+   * @param {object} req - The request object.
+   * @param {object} res - The response object.
+   * @returns {Promise<void>} - A promise that resolves to nothing.
+   */
+  verifyEmail = async (req, res) => {
+    throw new Error("ERR_METHOD_NOT_IMPLEMENTED");
+  };
 }
 
 module.exports = AuthControllerInterface;

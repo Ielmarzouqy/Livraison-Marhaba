@@ -3,6 +3,8 @@ const LoginUseCase = require("../../../application/usecases/auth/LoginUseCase");
 const RegisterUseCase = require("../../../application/usecases/auth/RegisterUseCase");
 const LogoutUseCase = require("../../../application/usecases/auth/LogoutUseCase");
 const RefreshTokenUseCase = require("../../../application/usecases/auth/RefreshTokenUseCase");
+const VerifyEmailUseCase = require("../../../application/usecases/auth/VerifyEmailUseCase");
+
 class AuthController extends AuthControllerInterface {
   constructor() {
     super();
@@ -10,6 +12,7 @@ class AuthController extends AuthControllerInterface {
     this.registerUseCase = new RegisterUseCase();
     this.logoutUseCase = new LogoutUseCase();
     this.refreshTokenUseCase = new RefreshTokenUseCase();
+    this.verifyEmailUseCase = new VerifyEmailUseCase();
   }
 
   register = async (req, res) => {
@@ -80,6 +83,26 @@ class AuthController extends AuthControllerInterface {
 
     if (jwt) {
       res.cookie("access_token", jwt.accessToken, { httpOnly: true });
+    }
+
+    res.status(status).json({ ...rest });
+  };
+
+  verifyEmail = async (req, res) => {
+    const { token } = req.query;
+    const { refresh_token } = req.cookies;
+
+    const { status, ...rest } = await this.verifyEmailUseCase.execute(
+      token,
+      refresh_token
+    );
+
+    if (status === 200 || refresh_token) {
+      const { jwt } = await this.refreshTokenUseCase.execute(refresh_token);
+
+      if (jwt) {
+        res.cookie("access_token", jwt.accessToken, { httpOnly: true });
+      }
     }
 
     res.status(status).json({ ...rest });

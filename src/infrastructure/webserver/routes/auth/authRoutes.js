@@ -11,4 +11,6 @@ authRoutes.post("/logout", authController.logout);
 
 authRoutes.post("/refresh-token", authController.refreshToken);
 
+authRoutes.post("/verify-email", authController.verifyEmail);
+
 module.exports = authRoutes;
