@@ -13,7 +13,7 @@ class UserRepository extends BaseRepository {
     try {
       const roles = await this.roleModel.find({ name: { $in: roleNames } });
 
-      if (!roles) {
+      if (roles.length !== roleNames.length) {
         throw new Error("Role does not exist");
       }
 

@@ -11,6 +11,7 @@ class RoleSeeder {
 
       if (existingRoles.length === 0) {
         const roles = [
+          { name: "superadmin" },
           { name: "manager" },
           { name: "delivery" },
           { name: "customer" },
