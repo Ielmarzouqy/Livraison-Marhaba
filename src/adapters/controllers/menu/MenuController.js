@@ -30,7 +30,7 @@ class MenuController {
 
   updateMenu = async (req, res) => {
     const { menuId } = req.params;
-    const { data } = req.body;
+    const  data  = req.body;
 
     const { status, message, menu } = await this.updateMenuUseCase.execute(menuId, data);
 

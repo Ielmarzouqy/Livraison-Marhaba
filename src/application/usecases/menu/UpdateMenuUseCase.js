@@ -7,6 +7,7 @@ class UpdateMenuUseCase {
 
   execute = async (menuId, data) => {
     try {
+      await this.menuServices.validateUpdateMenu(data);
       const updatedMenu = await this.menuServices.updateMenu(menuId, data);
 
       return {

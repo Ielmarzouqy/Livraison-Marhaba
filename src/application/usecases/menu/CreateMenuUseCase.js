@@ -7,6 +7,8 @@ class CreateMenuUseCase {
   
     execute = async (data) => {
       try {
+        await this.menuServices.validateCreateMenu(data);
+
         const createdMenu = await this.menuServices.createMenu(data);
   
         return {
