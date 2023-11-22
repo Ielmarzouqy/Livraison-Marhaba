@@ -59,6 +59,15 @@ class BaseRepository extends RepositoryInterface {
     }
   };
 
+  findAll = async (includeDeleted = false) => {
+    const query = includeDeleted ? {} : { isDeleted: false };
+    try {
+      return await this.model.find(query);
+    } catch (error) {
+      throw new Error(error);
+    }
+  };
+  
   softDelete = async (id) => {
     try {
       return await this.model.findByIdAndUpdate(
