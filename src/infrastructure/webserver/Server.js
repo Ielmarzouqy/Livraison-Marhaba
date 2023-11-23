@@ -1,9 +1,9 @@
-const express = require("express");
-const cookieParser = require("cookie-parser");
-const cors = require("cors");
-const { PORT } = require("../config/environment");
-const router = require("./routes");
-const ErrorHandler = require("../errors/ErrorHandler");
+const express = require('express');
+const cookieParser = require('cookie-parser');
+const cors = require('cors');
+const { PORT } = require('../config/environment');
+const router = require('./routes');
+const ErrorHandler = require('../errors/ErrorHandler');
 
 class Server {
   constructor() {
@@ -19,16 +19,16 @@ class Server {
 
     this.app.use(
       cors({
-        origin: "http://localhost:3000",
+        origin: 'http://localhost:3000',
         credentials: true,
       })
     );
 
-    this.app.get("/", (req, res) => {
-      res.send("Hello World!");
+    this.app.get('/', (req, res) => {
+      res.send('Hello World!');
     });
 
-    this.app.use("/api", this.router);
+    this.app.use('/api', this.router);
 
     this.app.use(this.ErrorHandler.notFound);
     this.app.use(this.ErrorHandler.handle);
