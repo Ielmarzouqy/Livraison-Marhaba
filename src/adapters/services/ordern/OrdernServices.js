@@ -1,82 +1,63 @@
 
 const OrdernRepository = require("../../../infrastructure/repositories/OrdernRepository");
-const validateData = require("../../../infrastructure/helpers/validateData");
 
 class OrdernServices {
   constructor() {
-    super();
+   
     this.ordernRepository = new OrdernRepository();
-    this.validateData = validateData;
+    
   }
 
-  validateOrdernData = async (ordernData) => {
-    const { error: validationError } = this.validateData(
-      ordernData,
-      "makeorder"
-    );
 
-    if (validationError) {
-      const error = new Error(validationError.message);
-      error.status = validationError.status;
-
-      throw error;
-    }
-  };
  
-//   register = async (data) => {
-//     const user = await this.userRepository.create(data);
+  makeOrder = async (data) => {
 
-//     if (!user) {
-//       const error = new Error("User could not be created");
-//       error.status = 500;
+    console.log("makeOrder ", data)
 
-//       throw error;
-//     }
+    const ordern = await this.ordernRepository.create(data);
 
-//     return {
-//       id: user._id,
-//       firstName: user.firstName,
-//       lastName: user.lastName,
-//       email: user.email,
-//       image: user.image,
-//       phoneNumber: user.phoneNumber,
-//       address: user.address,
-//       roles: user.roles.map((role) => role.name),
-//       isVerified: user.isVerified,
-//       isBanned: user.isBanned,
-//     };
-//   };
-
-
-
-  getOrdernCredentials = async (id) => {
-    const ordern = await this.ordernRepository.findById(id);
+console.log("makeOrder in order service", ordern )
 
     if (!ordern) {
-      const error = new Error("User does not exist");
-      error.status = 404;
+      const error = new Error("Order could not be created");
+      error.status = 500;
 
       throw error;
     }
 
     return {
-      id: ordern._id,
-      firstName: user.firstName,
-      lastName: user.lastName,
-    //   email: user.email,
-    //   image: user.image,
-    //   phoneNumber: user.phoneNumber,
-    //   address: user.address,
-    //   roles: user.roles.map((role) => role.name),
-
-      foodns: ordern.foodns.map((foodn) => foodn.name),
-      users: ordern.users.map((user) => user.name),
+      // id: ordern._id,
+      food: ordern.foodnNames,
+      user: ordern.usern,
+      price: ordern.price,
 
       
-    //   isVerified: user.isVerified,
-    //   isBanned: user.isBanned,
     };
   };
+
+
+
+  // getOrdernCredentials = async (id) => {
+  //   const ordern = await this.ordernRepository.findById(id);
+
+  //   if (!ordern) {
+  //     const error = new Error("Order does not exist");
+  //     error.status = 404;
+
+  //     throw error;
+  //   }
+
+  //   return {
+  //     id: ordern._id,
+  //     firstName: user.firstName,
+  //     lastName: user.lastName,
+  //   //   roles: user.roles.map((role) => role.name),
+
+  //     foodns: ordern.foodns.map((foodn) => foodn.name),
+  //     users: ordern.users.map((user) => user.name),
+
+  //   };
+  // };
 }
 
 module.exports = OrdernServices;

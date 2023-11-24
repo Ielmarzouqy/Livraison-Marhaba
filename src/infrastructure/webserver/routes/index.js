@@ -1,5 +1,6 @@
 const express = require("express");
 const authRoutes = require("./auth/authRoutes");
+const ordernRoutes = require("./order/ordernRoutes");
 
 const router = express.Router();
 
@@ -7,6 +8,8 @@ router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
 
 router.use("/auth", authRoutes);
+router.use("/make-order", ordernRoutes);
+
 
 router.use((err, req, res, next) => {
   console.error(err.stack);

@@ -11,12 +11,16 @@ class OrdernRepository extends BaseRepository {
   }
 
   create = async (data) => {
-    const { foodnNames, usern, ...ordernCredentials } = data;
+    const { food, user, ...ordernCredentials } = data;
+
+    console.log("repo  ", data)
     try {
-      const foodns = await this.foodnModel.find({ name: foodnNames });
-      const userns = await this.usernModel.findById(usern);
-      //   console.log('fffffff  ', foodns);
-      //   console.log('uuuuuuu  ', userns);
+
+      // console.log('fffffff  ', food);
+      // console.log('uuuuuuu  ', user);
+      const foodns = await this.foodnModel.find({ _id: food });
+      const userns = await this.usernModel.findById(user);
+       
 
       return await this.model.create({
         food: foodns[0]._id,
