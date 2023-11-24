@@ -3,12 +3,12 @@ const { Schema, model, models } = require("../mongoose");
 const foodnSchema = Schema({
     name:{
         type:String,
-        required:true,
+        // required:true,
        
     },
 price:{
     type:Number,
-    required:true,
+    // required:true,
     
 },
 description:{

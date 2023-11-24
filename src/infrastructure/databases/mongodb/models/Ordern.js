@@ -3,20 +3,28 @@ const { Schema, model, models } = require("../mongoose");
 const ordernSchema = Schema({
     price:{
         type:Number,
-        required:true,
+        // required:true,
         
     },
     user:{
-        type : mongoose.Schema.Types.ObjectId,
-        // required:true,
-        ref: 'User',
+        // type: [Object],
+        ref: "User",
+        type : Schema.Types.ObjectId,
+        // // required:true,
+        // ref: 'User',
     },
     food:{
-        type : mongoose.Schema.Types.ObjectId,
-        // required:true,
-        ref: 'Foodn',
+        // type: [Object],
+         ref: "Foodn",
+        type : Schema.Types.ObjectId,
+        // // required:true,
+        // ref: 'Foodn',
     },  
-
+    status:{
+        type : String,
+        default:"pending"
+        
+    },
     
     },
     {
