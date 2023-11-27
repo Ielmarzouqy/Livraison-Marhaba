@@ -34,4 +34,22 @@ class OrdernRepository extends BaseRepository {
 
 }
 
+update = async (orderId, orderUpdate) => {
+  try {
+    const updatedOrder = await this.model.findByIdAndUpdate(
+      orderId,
+      { $set: orderUpdate },
+      { new: true }
+    );
+      console.log("orderUpdate repo ", orderUpdate)
+    /
+    console.log("orderUpdate ", updatedOrder)
+
+    return updatedOrder;
+  } catch (error) {
+    throw new Error(error);
+  }
+};
+
+
 module.exports = OrdernRepository;

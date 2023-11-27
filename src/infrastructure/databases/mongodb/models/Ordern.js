@@ -25,6 +25,11 @@ const ordernSchema = Schema({
         default:"pending"
         
     },
+    // isConfirmed:{
+    //     type : Boolean,
+    //     default: false
+        
+    // },
     
     },
     {

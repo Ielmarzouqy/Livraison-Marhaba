@@ -8,7 +8,6 @@ class OrdernServices {
     
   }
 
-
  
   makeOrder = async (data) => {
 
@@ -33,6 +32,19 @@ console.log("makeOrder in order service", ordern )
 
       
     };
+  };
+
+ 
+  confirmOrdern = async (orderId, orderUpdate) => {
+    try {
+      const updatedOrder = await this.ordernRepository.update(orderId, orderUpdate);
+
+      console.log("orderUpdate service ", updatedOrder);
+
+      return updatedOrder;
+    } catch (error) {
+      throw new Error(error);
+    }
   };
 
 

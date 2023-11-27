@@ -4,5 +4,7 @@ const OrdernController = require("../../../../adapters/controllers/order/OrdernC
 const ordernController = new OrdernController();
 
 ordernRoutes.post("/ordern", ordernController.registerOrder);
+ordernRoutes.put("/confirm", ordernController.confirmationOrder);
+
 
 module.exports = ordernRoutes;
