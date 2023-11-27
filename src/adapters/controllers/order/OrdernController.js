@@ -1,6 +1,4 @@
-
-
-const OrdernUseCase = require("../../../application/usecases/order/OrdernUseCase");
+const OrdernUseCase = require('../../../application/usecases/order/OrdernUseCase');
 
 class OrdernController {
   constructor() {
@@ -8,46 +6,35 @@ class OrdernController {
   }
 
   registerOrder = async (req, res) => {
-    const {
-      price,
-      user,
-      food,
-    } = req.body;
+    const { foods, user } = req.body;
 
     try {
       const result = await this.ordernUseCase.executeOrder({
-        price,
+        foods,
         user,
-        food,
       });
 
       res.status(200).json(result);
     } catch (error) {
-     
       console.error(error);
-      res.status(500).json({ error: "Internal Server Error" });
+      res.status(500).json({ error: 'Internal Server Error' });
     }
   };
 
   confirmationOrder = async (req, res) => {
-    const {
-      _id
-    } = req.body;
+    const { _id } = req.body;
 
     try {
       const result = await this.ordernUseCase.confirmOrder({
-        _id
+        _id,
       });
 
       res.status(200).json(result);
     } catch (error) {
-     
       console.error(error);
-      res.status(500).json({ error: "Internal Server Error" });
+      res.status(500).json({ error: 'Internal Server Error' });
     }
   };
-
 }
 
 module.exports = OrdernController;
-

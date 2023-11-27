@@ -11,27 +11,24 @@ class OrdernRepository extends BaseRepository {
   }
 
   create = async (data) => {
-    const { food, user, ...ordernCredentials } = data;
+    const { foods, user } = data;
 
-    console.log("repo  ", data)
+    console.log('repo  ', data);
     try {
-
-      // console.log('fffffff  ', food);
-      // console.log('uuuuuuu  ', user);
-      const foodns = await this.foodnModel.find({ _id: food });
+      const foodns = await this.foodnModel.find({ _id: { $in: foods } });
       const userns = await this.usernModel.findById(user);
-       
 
-      return await this.model.create({
-        food: foodns[0]._id,
-        user: userns._id,
-        ...ordernCredentials,
-      });
+      const orders = foodns.map((foodn) => ({
+        food: foodn,
+        price: foodn.price,
+        user: userns,
+      }));
+
+      return await this.model.insertMany(orders);
     } catch (error) {
       throw new Error(error);
     }
   };
-
 }
 
 update = async (orderId, orderUpdate) => {
@@ -41,15 +38,13 @@ update = async (orderId, orderUpdate) => {
       { $set: orderUpdate },
       { new: true }
     );
-      console.log("orderUpdate repo ", orderUpdate)
-    /
-    console.log("orderUpdate ", updatedOrder)
+    console.log('orderUpdate repo ', orderUpdate) /
+      console.log('orderUpdate ', updatedOrder);
 
     return updatedOrder;
   } catch (error) {
     throw new Error(error);
   }
 };
-
 
 module.exports = OrdernRepository;
