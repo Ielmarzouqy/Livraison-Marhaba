@@ -1,13 +1,23 @@
+const { createServer } = require("http");
 const express = require("express");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const { PORT } = require("../config/environment");
 const router = require("./routes");
 const ErrorHandler = require("../errors/ErrorHandler");
+const { Server: SocketIoServer } = require("socket.io");
 
 class Server {
   constructor() {
     this.app = express();
+    this.server = createServer(this.app);
+    this.io = new SocketIoServer(this.server, {
+      cors: {
+        origin: "http://localhost:3000",
+        methods: ["GET", "POST"],
+      },
+    });
+
     this.PORT = PORT;
     this.router = router;
     this.ErrorHandler = ErrorHandler;
@@ -32,12 +42,20 @@ class Server {
 
     this.app.use(this.ErrorHandler.notFound);
     this.app.use(this.ErrorHandler.handle);
+
+    this.io.on("connection", (socket) => {
+      console.log("a user connected");
+
+      socket.on("disconnect", () => {
+        console.log("user disconnected");
+      });
+    });
   };
 
   start = () => {
     this.configure();
 
-    this.app.listen(this.PORT, () => {
+    this.server.listen(this.PORT, () => {
       console.log(`-----------------------------------------------`);
       console.log(`| 🚀 Server running on http://localhost:${this.PORT}/ |`);
       console.log(`-----------------------------------------------`);
