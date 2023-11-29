@@ -8,7 +8,7 @@ class DeliveryTrackingController {
   updateLocation = async (req, res, next) => {
     try {
       const { deliveryId, location } = req.body;
-      const { status, ...rest } = this.UpdateLocationUseCase.execute(
+      const { status, ...rest } = await this.UpdateLocationUseCase.execute(
         deliveryId,
         location
       );

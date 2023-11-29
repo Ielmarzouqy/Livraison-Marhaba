@@ -8,7 +8,7 @@ router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
 
 router.use("/auth", authRoutes);
-router.use("delivery", deliveryRoutes);
+router.use("/delivery", deliveryRoutes);
 
 router.use((err, req, res, next) => {
   console.error(err.stack);
