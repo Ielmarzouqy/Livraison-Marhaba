@@ -6,6 +6,7 @@ const UserTokenRepository = require("../../../infrastructure/repositories/UserTo
 const validateData = require("../../../infrastructure/helpers/validateData");
 
 class AuthServices extends AuthServicesInterface {
+  
   constructor() {
     super();
     this.jsonWebToken = new JsonWebToken();
