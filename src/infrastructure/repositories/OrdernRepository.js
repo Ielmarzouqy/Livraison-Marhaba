@@ -1,6 +1,7 @@
 const BaseRepository = require('./BaseRepository');
 const User = require('../databases/mongodb/models/User');
-const Foodn = require('../databases/mongodb/models/Foodn');
+const Foodn = require('../databases/mongodb/models/Menu');
+
 const Ordern = require('../databases/mongodb/models/Ordern');
 
 class OrdernRepository extends BaseRepository {

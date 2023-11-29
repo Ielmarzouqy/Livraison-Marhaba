@@ -19,8 +19,8 @@ class OrdernUseCase   {
     
       return {
         status: 200,
-        message: "Order made  successfully ",
-        ordern,
+        message: "Order made use case successfully ",
+        ordern: data,
         
       };
     } catch (error) {

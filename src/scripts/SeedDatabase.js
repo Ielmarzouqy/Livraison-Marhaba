@@ -2,23 +2,24 @@ const RoleSeeder = require("../infrastructure/databases/mongodb/seeders/RoleSeed
 const AdminSeeder = require("../infrastructure/databases/mongodb/seeders/AdminSeeder");
 const FoodnSeeder = require("../infrastructure/databases/mongodb/seeders/FoodnSeeder");
 const OrdernSeeder = require("../infrastructure/databases/mongodb/seeders/OrdernSeeder");
+const RestaurantSeeder = require("../infrastructure/databases/mongodb/seeders/RestaurantSeeder");
 
 
 const roleSeeder = new RoleSeeder();
 const adminSeeder = new AdminSeeder();
 const foodnSeeder = new FoodnSeeder();
 const ordernSeeder = new OrdernSeeder();
-
-
+const restaurantSeeder = new RestaurantSeeder();
 
 const seedDatabase = async () => {
   try {
-    await roleSeeder.seed();
-    await adminSeeder.seed();
-    await foodnSeeder.seed();
-    await ordernSeeder.seed();
+    // await roleSeeder.seed();
+    // await adminSeeder.seed();
+    // await foodnSeeder.seed();
+    // await ordernSeeder.seed();
 
 
+    await restaurantSeeder.seed();
     process.exit(0);
   } catch (error) {
     console.log(error);

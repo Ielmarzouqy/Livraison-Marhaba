@@ -15,7 +15,7 @@ const ordernSchema = Schema({
     },
     food:{
         // type: [Object],
-         ref: "Foodn",
+         ref: "Menu",
         type : [Schema.Types.ObjectId],
         // // required:true,
         // ref: 'Foodn',
