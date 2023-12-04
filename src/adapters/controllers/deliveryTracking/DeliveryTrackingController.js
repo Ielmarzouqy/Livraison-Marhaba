@@ -5,17 +5,17 @@ class DeliveryTrackingController {
     this.UpdateLocationUseCase = new UpdateLocationUseCase();
   }
 
-  updateLocation = async (req, res, next) => {
+  updateLocation = async (socket, data) => {
     try {
-      const { deliveryId, location } = req.body;
+      const { deliveryId, location } = data;
       const { status, ...rest } = await this.UpdateLocationUseCase.execute(
         deliveryId,
         location
       );
 
-      res.status(status).json(rest);
+      socket.emit("deliveryLocation", { status, ...rest });
     } catch (err) {
-      next(err);
+      console.log(err);
     }
   };
 }

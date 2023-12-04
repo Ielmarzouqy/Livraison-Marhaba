@@ -5,7 +5,6 @@ const cors = require("cors");
 const { PORT } = require("../config/environment");
 const router = require("./routes");
 const ErrorHandler = require("../errors/ErrorHandler");
-const { Server: SocketIoServer } = require("socket.io");
 const SocketIo = require("../packages/socket.io/SocketIo");
 
 class Server {
