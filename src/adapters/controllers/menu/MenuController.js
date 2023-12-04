@@ -14,7 +14,9 @@ class MenuController {
   }
 
   createMenu = async (req, res) => {
-    const  data  = req.body;
+    const  inputData  = req.body;
+    const image = req.file.filename ;
+    const data = {...inputData , image } 
     const { status, message, menu } = await this.createMenuUseCase.execute(data);
 
     res.status(status).json({ message, menu });
