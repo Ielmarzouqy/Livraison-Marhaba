@@ -36,7 +36,7 @@ class BaseRepository extends RepositoryInterface {
   findById = async (id, includeDeleted = false) => {
     const query = includeDeleted ? { _id: id } : { _id: id, isDeleted: false };
     try {
-      return await this.model.findOne(query).populate("restaurant");;
+      return await this.model.findOne(query);
     } catch (error) {
       throw new Error(error);
     }
