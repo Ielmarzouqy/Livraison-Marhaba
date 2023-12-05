@@ -9,7 +9,7 @@ router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
 
 router.use("/auth", authRoutes);
-router.use("/make-order", ordernRoutes);
+router.use("/order", ordernRoutes);
 router.use("/menu", menuRoutes)
 
 router.use((err, req, res, next) => {

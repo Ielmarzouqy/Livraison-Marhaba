@@ -56,6 +56,30 @@ class OrdernUseCase   {
   }
   }
 
+  displayOrder = async ()=>{
+
+    // const orderUpdate = {
+    //   status: 'pickup', 
+    // };
+
+    try {
+    
+         const pendingOrders  =  await this.ordernServices.pendingOrder();
+  
+    return {
+      status: 200,
+      message: "Order made and confirmed successfully",
+      pendingOrders: pendingOrders,
+    };
+  } catch (error) {
+    console.log(error);
+    return {
+      status: error.status || 500,
+      message: error.message || "Something went wrong, please try again",
+    };
+  }
+  }
+
 }
 
 

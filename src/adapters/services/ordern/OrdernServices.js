@@ -1,24 +1,19 @@
-
-const OrdernRepository = require("../../../infrastructure/repositories/OrdernRepository");
+const OrdernRepository = require('../../../infrastructure/repositories/OrdernRepository');
 
 class OrdernServices {
   constructor() {
-   
     this.ordernRepository = new OrdernRepository();
-    
   }
 
- 
   makeOrder = async (data) => {
-
-    console.log("makeOrder ", data)
+    console.log('makeOrder ', data);
 
     const ordern = await this.ordernRepository.create(data);
 
-console.log("makeOrder in order service", ordern )
+    console.log('makeOrder in order service', ordern);
 
     if (!ordern) {
-      const error = new Error("Order could not be created");
+      const error = new Error('Order could not be created');
       error.status = 500;
 
       throw error;
@@ -29,17 +24,17 @@ console.log("makeOrder in order service", ordern )
       food: ordern.foodnNames,
       user: ordern.usern,
       price: ordern.price,
-
-      
     };
   };
 
- 
   confirmOrdern = async (orderId, orderUpdate) => {
     try {
-      const updatedOrder = await this.ordernRepository.update(orderId, orderUpdate);
+      const updatedOrder = await this.ordernRepository.update(
+        orderId,
+        orderUpdate
+      );
 
-      console.log("orderUpdate service ", updatedOrder);
+      console.log('orderUpdate service ', updatedOrder);
 
       return updatedOrder;
     } catch (error) {
@@ -47,7 +42,17 @@ console.log("makeOrder in order service", ordern )
     }
   };
 
+  pendingOrder = async () => {
+    try {
+      const pendingOrders = await this.ordernRepository.getOrders();
 
+      console.log('orderUpdate service ', pendingOrders);
+
+      return pendingOrders;
+    } catch (error) {
+      throw new Error(error);
+    }
+  };
 
   // getOrdernCredentials = async (id) => {
   //   const ordern = await this.ordernRepository.findById(id);
