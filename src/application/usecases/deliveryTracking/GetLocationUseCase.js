@@ -1,19 +1,18 @@
 const DeliveryTrackingServices = require("../../../adapters/services/deliveryTracking/DeliveryTrackingServices");
 
-class UpdateLocationUseCase {
+class GetLocationUseCase {
   constructor() {
     this.deliveryTrackingServices = new DeliveryTrackingServices();
   }
 
-  execute = async (deliveryId, location) => {
+  async execute(deliveryId) {
     try {
-      await this.deliveryTrackingServices.updateLocation(deliveryId, location);
+      const deliveryTracking = await this.deliveryTrackingServices.getLocation(
+        deliveryId
+      );
       return {
         status: 200,
-        data: {
-          deliveryId,
-          location,
-        },
+        data: deliveryTracking,
       };
     } catch (error) {
       return {
@@ -21,7 +20,7 @@ class UpdateLocationUseCase {
         message: error.message,
       };
     }
-  };
+  }
 }
 
-module.exports = UpdateLocationUseCase;
+module.exports = GetLocationUseCase;

@@ -16,7 +16,7 @@ class SocketIo {
 
   registerEventHandler = () => {
     this.eventHandlers.set(
-      "deliveryLocation",
+      "updateDeliveryLocation",
       this.deliveryTrackingController.updateLocation
     );
   };

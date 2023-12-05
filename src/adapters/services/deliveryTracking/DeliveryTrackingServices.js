@@ -11,6 +11,13 @@ class DeliveryTrackingServices {
       location
     );
   };
+
+  getLocation = async (deliveryId) => {
+    const location = await this.firebaseRepository.getData(
+      `deliveries/${deliveryId}/location`
+    );
+    return location;
+  };
 }
 
 module.exports = DeliveryTrackingServices;
