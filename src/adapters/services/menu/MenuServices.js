@@ -68,6 +68,7 @@ class MenuServices extends MenuServicesInterface {
 
     return menus;
   };
+  
   validateCreateMenu = async (data)=>{
     const { error: validationError } = this.validateData(
       data,

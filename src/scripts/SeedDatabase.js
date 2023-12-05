@@ -3,6 +3,7 @@ const AdminSeeder = require("../infrastructure/databases/mongodb/seeders/AdminSe
 const FoodnSeeder = require("../infrastructure/databases/mongodb/seeders/FoodnSeeder");
 const OrdernSeeder = require("../infrastructure/databases/mongodb/seeders/OrdernSeeder");
 const RestaurantSeeder = require("../infrastructure/databases/mongodb/seeders/RestaurantSeeder");
+const MenuSeeder = require("../infrastructure/databases/mongodb/seeders/MenuSeeder");
 
 
 const roleSeeder = new RoleSeeder();
@@ -10,6 +11,7 @@ const adminSeeder = new AdminSeeder();
 const foodnSeeder = new FoodnSeeder();
 const ordernSeeder = new OrdernSeeder();
 const restaurantSeeder = new RestaurantSeeder();
+const menuSeeder = new MenuSeeder();
 
 const seedDatabase = async () => {
   try {
@@ -20,6 +22,7 @@ const seedDatabase = async () => {
 
 
     await restaurantSeeder.seed();
+    await menuSeeder.seed();
     process.exit(0);
   } catch (error) {
     console.log(error);

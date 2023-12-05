@@ -14,7 +14,8 @@ class MenuController {
   }
 
   createMenu = async (req, res) => {
-    const  data  = req.body;
+    const  inputData  = req.body;
+    const data = {...inputData } 
     const { status, message, menu } = await this.createMenuUseCase.execute(data);
 
     res.status(status).json({ message, menu });
