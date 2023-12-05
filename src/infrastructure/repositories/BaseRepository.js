@@ -8,7 +8,15 @@ class BaseRepository extends RepositoryInterface {
     super();
     this.model = model;
   }
-
+  
+  findOne = async (conditions) => {
+    try {
+      return await this.model.findOne(conditions);
+    } catch (error) {
+      throw new Error(error);
+    }
+  };
+  
   create = async (data) => {
     try {
       return await this.model.create(data);
@@ -59,6 +67,15 @@ class BaseRepository extends RepositoryInterface {
     }
   };
 
+  findAll = async (includeDeleted = false) => {
+    const query = includeDeleted ? {} : { isDeleted: false };
+    try {
+      return await this.model.find(query);
+    } catch (error) {
+      throw new Error(error);
+    }
+  };
+  
   softDelete = async (id) => {
     try {
       return await this.model.findByIdAndUpdate(
