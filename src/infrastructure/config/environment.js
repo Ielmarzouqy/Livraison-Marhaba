@@ -24,4 +24,7 @@ module.exports = {
       PASS: process.env.EMAIL_AUTH_PASS,
     },
   },
+  firebase: {
+    SERVICE_ACCOUNT_KEY: process.env.SERVICE_ACCOUNT_KEY,
+  },
 };

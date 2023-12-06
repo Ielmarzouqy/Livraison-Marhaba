@@ -1,8 +1,8 @@
 const { exist } = require('joi');
-const OrdernRepository = require('../../../repositories/OrdernRepository');
+const OrderRepository = require('../../../repositories/OrderRepository');
 class OrdernSeeder {
   constructor() {
-    this.ordernRepository = new OrdernRepository();
+    this.orderRepository = new OrderRepository();
   }
 
   seed = async () => {
@@ -14,7 +14,7 @@ class OrdernSeeder {
         price: '233',
       };
       
-      await this.ordernRepository.create(order);
+      await this.orderRepository.create(order);
       console.log('order seeded successfully.');
     
     } catch (error) {
