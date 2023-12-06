@@ -8,7 +8,15 @@ class BaseRepository extends RepositoryInterface {
     super();
     this.model = model;
   }
-
+  
+  findOne = async (conditions) => {
+    try {
+      return await this.model.findOne(conditions);
+    } catch (error) {
+      throw new Error(error);
+    }
+  };
+  
   create = async (data) => {
     try {
       return await this.model.create(data);
