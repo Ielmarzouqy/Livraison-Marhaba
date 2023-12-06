@@ -1,8 +1,9 @@
 const express = require("express");
 const authRoutes = require("./auth/authRoutes");
-const orderRoutes = require("./order/orderRoutes");
 const deliveryRoutes = require("./delivery/deliveryRoutes");
 const menuRoutes = require("./menu/menuRoutes");
+const restoRoutes = require("./Restaurant/restoRoutes");
+const orderRoutes = require("./order/orderRoutes");
 
 const router = express.Router();
 
@@ -10,10 +11,11 @@ router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
 
 router.use("/auth", authRoutes);
-router.use("/order", orderRoutes);
-router.use("/menu", menuRoutes)
 router.use("/delivery", deliveryRoutes);
-// router.use("/resto", restoRoutes);
+router.use("/menu", menuRoutes);
+router.use("/order", orderRoutes);
+
+router.use("/resto", restoRoutes);
 
 router.use((err, req, res, next) => {
   console.error(err.stack);
