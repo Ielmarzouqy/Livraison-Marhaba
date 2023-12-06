@@ -14,7 +14,7 @@ class UserRepository extends BaseRepository {
       const roles = await this.roleModel.find({ name: { $in: roleNames } });
 
       if (roles.length !== roleNames.length) {
-        throw new Error("Role does not exist");
+        throw new  Error("Role does not exist");
       }
 
       return await this.model.create({
