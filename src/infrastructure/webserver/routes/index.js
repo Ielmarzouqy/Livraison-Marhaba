@@ -1,6 +1,6 @@
 const express = require("express");
 const authRoutes = require("./auth/authRoutes");
-const ordernRoutes = require("./order/ordernRoutes");
+const orderRoutes = require("./order/orderRoutes");
 const menuRoutes = require("./menu/menuRoutes");
 
 const router = express.Router();
@@ -9,7 +9,7 @@ router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
 
 router.use("/auth", authRoutes);
-router.use("/order", ordernRoutes);
+router.use("/order", orderRoutes);
 router.use("/menu", menuRoutes)
 
 router.use((err, req, res, next) => {

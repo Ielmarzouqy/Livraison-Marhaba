@@ -1,9 +1,9 @@
-const OrdernServices = require("../../../adapters/services/ordern/OrdernServices");
+const OrderServices = require("../../../adapters/services/order/OrderServices");
 
-class OrdernUseCase   {
+class OrderUseCase   {
   constructor() {
     
-    this.ordernServices = new OrdernServices();
+    this.orderServices = new OrderServices();
   }
 
   executeOrder = async (data) => {
@@ -11,7 +11,7 @@ class OrdernUseCase   {
    
         console.log("usecase of order after validateOrdernData  ", data)
 
-      const ordern = await this.ordernServices.makeOrder(data);
+      const ordern = await this.orderServices.makeOrder(data);
 
         console.log("usecase of order after makeOrder  ", data)
 
@@ -40,7 +40,7 @@ class OrdernUseCase   {
 
     try {
     
-         const confirmedOrder  =  await this.ordernServices.confirmOrdern(_id, orderUpdate);
+         const confirmedOrder  =  await this.orderServices.confirmOrdern(_id, orderUpdate);
   
     return {
       status: 200,
@@ -64,7 +64,7 @@ class OrdernUseCase   {
 
     try {
     
-         const pendingOrders  =  await this.ordernServices.pendingOrder();
+         const pendingOrders  =  await this.orderServices.pendingOrder();
   
     return {
       status: 200,
@@ -83,5 +83,5 @@ class OrdernUseCase   {
 }
 
 
-module.exports = OrdernUseCase;
+module.exports = OrderUseCase;
  

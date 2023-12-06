@@ -1,16 +1,15 @@
 const BaseRepository = require('./BaseRepository');
 const User = require('../databases/mongodb/models/User');
-const Foodn = require('../databases/mongodb/models/Menu');
+const Food = require('../databases/mongodb/models/Menu');
 
-const Ordern = require('../databases/mongodb/models/Ordern');
+const Order = require('../databases/mongodb/models/Order');
 const Menu = require('../databases/mongodb/models/Menu');
 
-class OrdernRepository extends BaseRepository {
+class OrderRepository extends BaseRepository {
   constructor() {
-    super(Ordern);
-    this.foodnModel = Foodn;
-    this.usernModel = User;
-    // this.ordernModel = Ordern;
+    super(Order);
+    this.foodModel = Food;
+    this.userModel = User;
 
   }
 
@@ -19,8 +18,8 @@ class OrdernRepository extends BaseRepository {
 
     console.log('repo  ', data);
     try {
-      const foodns = await this.foodnModel.find({ _id: { $in: foods } });
-      const userns = await this.usernModel.findById(user);
+      const foodns = await this.foodModel.find({ _id: { $in: foods } });
+      const userns = await this.userModel.findById(user);
 
       const orders = foodns.map((foodn) => ({
         food: foodn,
@@ -51,11 +50,11 @@ update = async (orderId, orderUpdate) => {
   }
 };
 
-
 getOrders = async () => {
   try {
     const orders = await this.model.find({ status: 'pending' }).lean(); 
     
+    // Fetch details for each food item
     const populatedOrders = await Promise.all(orders.map(async (order) => {
       const populatedFood = await this.populateFoodDetails(order.food);
       console.log("populatedFood", populatedFood)
@@ -78,4 +77,4 @@ populateFoodDetails = async (foodIds) => {
 };
 
 }
-module.exports = OrdernRepository;
+module.exports = OrderRepository;

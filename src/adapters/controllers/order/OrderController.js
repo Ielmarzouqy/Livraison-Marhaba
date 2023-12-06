@@ -1,15 +1,15 @@
-const OrdernUseCase = require('../../../application/usecases/order/OrdernUseCase');
+const OrderUseCase = require("../../../application/usecases/order/OrderUseCase");
 
-class OrdernController {
+class OrderController {
   constructor() {
-    this.ordernUseCase = new OrdernUseCase();
+    this.orderUseCase = new OrderUseCase();
   }
 
   registerOrder = async (req, res) => {
     const { foods, user } = req.body;
 
     try {
-      const result = await this.ordernUseCase.executeOrder({
+      const result = await this.orderUseCase.executeOrder({
         foods,
         user,
       });
@@ -26,7 +26,7 @@ class OrdernController {
 
     console.log(_id);
     try {
-      const result = await this.ordernUseCase.confirmOrder(_id);
+      const result = await this.orderUseCase.confirmOrder(_id);
 
       res.status(200).json(result);
     } catch (error) {
@@ -36,11 +36,14 @@ class OrdernController {
   };
 
   getPendingOrder = async (req, res) => {
-  
+    // const {_id } = req.params;
+
+    // console.log(_id)
     try {
-      const result = await this.ordernUseCase.displayOrder();
+      const result = await this.orderUseCase.displayOrder();
 
       if (!result || !Array.isArray(result.pendingOrders)) {
+        // If result or pendingOrders is missing or not an array, handle it accordingly
         return res.status(500).json({
           error: 'Internal Server Error',
           message: 'Invalid result format',
@@ -49,12 +52,18 @@ class OrdernController {
 
       const formattedResult = result.pendingOrders.map((order) => ({
         _id: order._id,
+        //     price: order.price,
+        //     user: order.user,
         food: order.food.map((food) => ({
           _id: food._id,
           name: food.name,
-         
+          //       description: food.description,
+          //       price: food.price,
+          //       // Include other relevant fields from the food object
         })),
-        
+        //     status: order.status,
+        //     createdAt: order.createdAt,
+        //     updatedAt: order.updatedAt,
       }));
       console.log('result', result);
       console.log('formattedResult', formattedResult[0].food);
@@ -69,4 +78,4 @@ class OrdernController {
   };
 }
 
-module.exports = OrdernController;
+module.exports = OrderController;
