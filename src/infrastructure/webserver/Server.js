@@ -7,6 +7,10 @@ const router = require("./routes");
 const ErrorHandler = require("../errors/ErrorHandler");
 const SocketIo = require("../packages/socket.io/SocketIo");
 
+
+const products=require("../../../products")
+
+
 class Server {
   constructor() {
     this.app = express();
@@ -24,13 +28,17 @@ class Server {
     this.app.use(
       cors({
         origin: "http://localhost:3000",
+        // origin: "*",
         credentials: true,
       })
     );
-
     this.app.get("/", (req, res) => {
       res.send("Hello World!");
     });
+
+    this.app.get('/products',(req,res)=>{
+      res.send(products)
+  });
 
     this.app.use("/api", this.router);
 
