@@ -52,7 +52,7 @@ update = async (orderId, orderUpdate) => {
 
 getOrders = async () => {
   try {
-    const orders = await this.model.find({ status: 'pending' }).lean(); 
+    const orders = await this.model.find({ status: 'pending' }).populate("user").lean(); 
     
     // Fetch details for each food item
     const populatedOrders = await Promise.all(orders.map(async (order) => {
@@ -69,7 +69,7 @@ getOrders = async () => {
 
 populateFoodDetails = async (foodIds) => {
   try {
-    const foods = await Menu.find({ _id: { $in: foodIds } }).lean(); 
+    const foods = await Menu.find({ _id: { $in: foodIds } }).populate("restaurant").lean(); 
     return foods;
   } catch (error) {
     throw error;

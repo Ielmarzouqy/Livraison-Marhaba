@@ -1,4 +1,4 @@
-const OrderUseCase = require("../../../application/usecases/order/OrderUseCase");
+const OrderUseCase = require('../../../application/usecases/order/OrderUseCase');
 
 class OrderController {
   constructor() {
@@ -18,6 +18,22 @@ class OrderController {
     } catch (error) {
       console.error(error);
       res.status(500).json({ error: 'Internal Server Error' });
+    }
+  };
+
+  handleNewOrder = async (socket, data) => {
+    const { foods, user } = data;
+
+    try {
+      const result = await this.orderUseCase.executeOrder({
+        foods,
+        user,
+      });
+
+      socket.broadcast.emit('notification', result.ordern);
+    } catch (error) {
+      console.error(error);
+      socket.emit('notification', { error: error });
     }
   };
 

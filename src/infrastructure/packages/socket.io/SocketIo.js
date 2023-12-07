@@ -1,5 +1,6 @@
 const { Server } = require("socket.io");
 const DeliveryTrackingController = require("../../../adapters/controllers/deliveryTracking/DeliveryTrackingController");
+const OrderController = require("../../../adapters/controllers/order/OrderController");
 
 class SocketIo {
   constructor(server) {
@@ -12,12 +13,18 @@ class SocketIo {
 
     this.eventHandlers = new Map();
     this.deliveryTrackingController = new DeliveryTrackingController();
+    this.orderController = new OrderController();
+
   }
 
   registerEventHandler = () => {
     this.eventHandlers.set(
       "updateDeliveryLocation",
       this.deliveryTrackingController.updateLocation
+    );
+    this.eventHandlers.set(
+      "newOrder",
+      this.orderController.handleNewOrder
     );
   };
 
